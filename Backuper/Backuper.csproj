@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Resources\icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
