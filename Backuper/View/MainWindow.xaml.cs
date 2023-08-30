@@ -12,7 +12,7 @@ namespace Backuper
         public MainWindow()
         {
             saver = new SaveModel();
-            BackupModel backup = new(saver.DataKeeper.SourceDirectory, 
+            BackupModel.Backup(saver.DataKeeper.SourceDirectory, 
                 saver.DataKeeper.TargetDirectory);
 
             InitializeComponent();
