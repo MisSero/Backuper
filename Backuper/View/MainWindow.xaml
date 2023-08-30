@@ -9,6 +9,11 @@
         WindowState="Minimized" ShowInTaskbar="False"
         Loaded="MainWindow_Loaded" Closing="Window_Closing">
     <Grid>
-
+        <StackPanel>
+            <TextBox Name="SourceTextBox"  Margin="50,10,50,10" Text="{Binding Saver.}"/>
+            <Button Content="Select Path 1" Click="SelectPath_Click"  Margin="300,0,300,10" Tag="SourceTextBox"/>
+            <TextBox Name="TargetTextBox"  Margin="50,10,50,10"/>
+            <Button Content="Select Path 2" Click="SelectPath_Click"  Margin="300,0,300,10" Tag="TargetTextBox"/>
+        </StackPanel>
     </Grid>
 </Window>
