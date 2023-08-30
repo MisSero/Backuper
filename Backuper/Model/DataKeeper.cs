@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Backuper.Model;
 
-public class DataKeeper : INotifyPropertyChanged
+public class DataKeeper
 {
     public string SourceDirectory { get; set; }
     public string TargetDirectory { get; set; }
