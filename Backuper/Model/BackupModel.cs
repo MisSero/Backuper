@@ -27,7 +27,7 @@ public class BackupModel
 
         string directoryName = new DirectoryInfo(SourceDirectory).Name;
         string targetDirectory = Path.Combine(TargetDirectory, $"{directoryName} " +
-            DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")) + ".zip";
+            DateTime.Now.ToString("dd-MM-yyyy HH.mm.ss")) + ".zip";
 
         if (!Directory.Exists(SourceDirectory))
         {
