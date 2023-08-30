@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Backuper.Model;
+using Backuper.ViewModel;
 
 namespace Backuper;
 
@@ -12,23 +13,24 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         saver = new SaveModel();
-        BackupModel.Backup(saver.DataKeeper.SourceDirectory, 
-            saver.DataKeeper.TargetDirectory);
+        var dataKeeper = new DataKeeperViewModel(saver.DataKeeper);
+        BackupModel.Backup(dataKeeper.SourceDirectory, 
+            dataKeeper.TargetDirectory);
 
         InitializeComponent();
 
         // Создаём привязки к textBox
-        Binding binding = new Binding();
-        binding.Source = saver;
+        var binding = new Binding();
+        binding.Source = dataKeeper;
         binding.Mode = BindingMode.TwoWay;
-        binding.Path = new PropertyPath("DataKeeper.SourceDirectory");
+        binding.Path = new PropertyPath("SourceDirectory");
         binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
         SourceTextBox.SetBinding(TextBox.TextProperty, binding);
 
         binding = new Binding();
-        binding.Source = saver;
+        binding.Source = dataKeeper;
         binding.Mode = BindingMode.TwoWay;
-        binding.Path = new PropertyPath("DataKeeper.TargetDirectory");
+        binding.Path = new PropertyPath("TargetDirectory");
         binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
         TargetTextBox.SetBinding(TextBox.TextProperty, binding);
 
