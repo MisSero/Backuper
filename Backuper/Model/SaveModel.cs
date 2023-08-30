@@ -34,7 +34,10 @@ public class SaveModel
 
         string filePath = Path.Combine(_savePath, _fileName);
         if (File.Exists(filePath))
-            DataKeeper = JsonSerializer.Deserialize<DataKeeper>(filePath);
+        {
+            string jsonData = File.ReadAllText(filePath);
+            DataKeeper = JsonSerializer.Deserialize<DataKeeper>(jsonData);
+        }
         else
             DataKeeper = new DataKeeper();
     }
