@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Backuper.Model;
+using Backuper.Model.Interfaces;
 using Backuper.ViewModel;
 
 namespace Backuper;
@@ -10,16 +11,21 @@ namespace Backuper;
 public partial class MainWindow : Window
 {
     private SaveModel saver;
+    private ILogger logger;
     public MainWindow()
     {
         saver = new SaveModel();
-        var dataKeeper = new DataKeeperViewModel(saver.DataKeeper);
+        logger = saver.Logger;
+        var dataKeeper = new DataKeeperViewModel(saver.DataKeeper, logger);
+
+        logger.Log("Запуск приложения", LoggerLevel.Info);
+
         BackupModel.Backup(dataKeeper.SourceDirectory, 
-            dataKeeper.TargetDirectory);
+            dataKeeper.TargetDirectory, logger);
 
         InitializeComponent();
 
-        // Создаём привязки к textBox
+        // Создаём привязки к TextBoxs и ComboBox
         var binding = new Binding();
         binding.Source = dataKeeper;
         binding.Mode = BindingMode.TwoWay;
@@ -34,6 +40,12 @@ public partial class MainWindow : Window
         binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
         TargetTextBox.SetBinding(TextBox.TextProperty, binding);
 
+        binding = new Binding();
+        binding.Source = dataKeeper;
+        binding.Mode = BindingMode.TwoWay;
+        binding.Path = new PropertyPath("LoggerLevel");
+        binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+        ComboBoxLogLevel.SetBinding(ComboBox.SelectedIndexProperty, binding);
     }
 
     // Собитие при запуске окна, обеспечивает работу приложения в фоне
@@ -54,7 +66,7 @@ public partial class MainWindow : Window
         notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
         notifyIcon.ContextMenuStrip.Items.Add("Сделать резервное копирование", null, (s, args) =>
         {
-            BackupModel.Backup(SourceTextBox.Text, TargetTextBox.Text);
+            BackupModel.Backup(SourceTextBox.Text, TargetTextBox.Text, logger);
         });
         notifyIcon.ContextMenuStrip.Items.Add("Открыть настройки", null, (s, args) =>
         {
@@ -96,6 +108,6 @@ public partial class MainWindow : Window
 
     private void Backup_Click(object sender, RoutedEventArgs e)
     {
-        BackupModel.Backup(SourceTextBox.Text, TargetTextBox.Text);
+        BackupModel.Backup(SourceTextBox.Text, TargetTextBox.Text, logger);
     }
 }

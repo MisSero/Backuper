@@ -5,20 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Backuper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="266" Width="694"
+        Title="MainWindow" Height="330" Width="694"
         WindowState="Minimized" ShowInTaskbar="False"
         Loaded="MainWindow_Loaded" Closing="Window_Closing">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="49*"/>
-            <ColumnDefinition Width="751*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2">
+        <StackPanel>
             <TextBox Name="SourceTextBox"  Margin="50,10,50,10"/>
             <Button Content="Выбрать целевую папку" Click="SelectPath_Click"  Margin="250,0,250,10" Tag="SourceTextBox"/>
             <TextBox Name="TargetTextBox"  Margin="50,10,50,10"/>
             <Button Content="Выбрать папку назначения" Click="SelectPath_Click"  Margin="250,0,250,10" Tag="TargetTextBox"/>
-            <Button Content="Сделать резервное копирование" Click="Backup_Click" Margin="100,50,100,0"/>
+            <TextBlock Margin="250,40,250,10" TextAlignment="Center">Уровень журналирования</TextBlock>
+            <ComboBox Name="ComboBoxLogLevel" Margin="250,10,250,0">
+                <ComboBoxItem>Error</ComboBoxItem>
+                <ComboBoxItem>Info</ComboBoxItem>
+                <ComboBoxItem>Debug</ComboBoxItem>
+            </ComboBox>
+            <Button Content="Сделать резервное копирование" Click="Backup_Click" Margin="100,30,100,0"/>
         </StackPanel>
     </Grid>
 </Window>
